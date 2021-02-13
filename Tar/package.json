@@ -1,0 +1,24 @@
+{
+    "name" : "@schroedingerentertainment/se.sharp.tar",
+    "description" : "A generic GNU tar archive reader",
+    "homepage" : "https://github.com/SchroedingerEntertainment/Sharp",
+    "license" : "AGPL-3.0-or-later",
+    "version" : "1.0.0",
+    "dependencies" : {
+        "@schroedingerentertainment/se.sharp.common" : "^1.0.0"
+    },
+    "keywords" : [
+        "C#",
+        "sharp",
+        "csharp"
+    ],
+    "author" : {
+        "name" : "Shaarigan",
+        "url" : "https://github.com/Shaarigan"
+    },
+    "repository" : {
+        "url" : "https://github.com/SchroedingerEntertainment/Sharp.git",
+        "type" : "git",
+        "directory" : "Tar"
+    }
+}
