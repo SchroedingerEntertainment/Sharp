@@ -1,0 +1,32 @@
+name: Publish se.sharp.config
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths: 
+      - 'Config/package.json'
+
+jobs:
+  publish-gpr:
+    runs-on: ubuntu-latest
+    env:
+      sub-dir: 'Config'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+          scope: 'SchroedingerEntertainment'
+      - run: npm install
+        working-directory: ${{env.sub-dir}}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: npm ci
+        working-directory: ${{env.sub-dir}}
+      - run: npm publish
+        working-directory: ${{env.sub-dir}}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
