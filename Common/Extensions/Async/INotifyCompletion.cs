@@ -1,0 +1,31 @@
+// ==++==
+//
+//   Copyright (c) Microsoft Corporation.  All rights reserved.
+// 
+// ==--==
+// =+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+//
+// AsyncMethodBuilder.cs
+//
+// <OWNER>Microsoft</OWNER>
+//
+// Compiler-targeted types for use of asynchronous methods.
+//
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+#if net40
+namespace System.Runtime.CompilerServices
+{
+    /// <summary>
+    /// Represents an operation that will schedule continuations when the operation completes.
+    /// </summary>
+    public interface INotifyCompletion
+    {
+        /// <summary>
+        /// Schedules the continuation action to be invoked when the instance completes.
+        /// </summary>
+        /// <param name="continuation">The action to invoke when the operation completes.</param><exception cref="T:System.ArgumentNullException">The <paramref name="continuation"/> argument is null (Nothing in Visual Basic).</exception>
+        void OnCompleted(Action continuation);
+    }
+}
+#endif

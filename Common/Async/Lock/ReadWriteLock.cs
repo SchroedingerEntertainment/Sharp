@@ -1,0 +1,234 @@
+﻿// Copyright (C) 2017 Schroedinger Entertainment
+// Distributed under the Schroedinger Entertainment EULA (See EULA.md for details)
+
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace System.Threading
+{
+    /// <summary>
+    /// Spin awaits until desired access is passed
+    /// </summary>
+    public struct ReadWriteLock
+    {
+        public const Int32 WriteMask = 0x7ffffff;
+        public const Int32 ReaderMask = 0x8000000;
+        const int MaxDelay = 1000;
+
+        atomic_int @lock;
+        /// <summary>
+        /// Gets current lock state
+        /// </summary>
+        public Int32 State
+        {
+            get { return @lock.Value; }
+        }
+
+        Int32 scopeId;
+
+        atomic_int writeReferences;
+        /// <summary>
+        /// Gets the amount of write access nesting in this scope
+        /// </summary>
+        public int RefCount
+        {
+            get { return writeReferences.Value; }
+        }
+
+        /// <summary>
+        /// Try to acquire inclusive read access to the critical section
+        /// </summary>
+        public void ReadLock()
+        {
+            for (;;)
+            {
+                if (scopeId == Fiber.Id)
+                    return;
+
+                // Wait until there's no active writer
+                while ((@lock & ReaderMask) != 0)
+                    Thread.Sleep(0);
+
+                Int32 oldLock = (@lock & WriteMask);
+                Int32 newLock = oldLock + 1;
+
+                if (@lock.CompareExchange(newLock, oldLock) == oldLock)
+                    return;
+            }
+        }
+        /// <summary>
+        /// Try to acquire inclusive read access to the critical section
+        /// </summary>
+        public async Task ReadLockAsync()
+        {
+            for (int i = 0; !TryGetReadLock();)
+            {
+                await Taskʾ.Delay(i);
+                if (i < MaxDelay)
+                    i++;
+            }
+        }
+
+        /// <summary>
+        /// Try to acquire inclusive read access to the critical section
+        /// </summary>
+        /// <returns>True if successfully locked, false otherwise</returns>
+        public bool TryGetReadLock()
+        {
+            if (scopeId == Fiber.Id)
+                return true;
+
+            // Wait until there's no active writer
+            if ((@lock & ReaderMask) != 0)
+                return false;
+
+            Int32 oldLock = (@lock & WriteMask);
+            Int32 newLock = oldLock + 1;
+
+            return (@lock.CompareExchange(newLock, oldLock) == oldLock);
+        }
+
+        /// <summary>
+        /// Passes access for this lock object back
+        /// </summary>
+        public void ReadRelease()
+        {
+            if (scopeId != Fiber.Id)
+                @lock.Decrement();
+        }
+
+        /// <summary>
+        /// Try to acquire exclusive write access to the critical section
+        /// </summary>
+        public void WriteLock()
+        {
+            if (scopeId == Fiber.Id)
+            {
+                if ((@lock & WriteMask) != 0)
+                {
+                    throw new SynchronizationLockException();
+                }
+                writeReferences.Increment();
+                return;
+            }
+            for (;;)
+            {
+                if (scopeId == Fiber.Id)
+                {
+                    writeReferences.Increment();
+                    return;
+                }
+
+                // Wait until there's no active writer
+                while ((@lock & ReaderMask) != 0)
+                    Thread.Sleep(0);
+
+                Int32 oldLock = (@lock & WriteMask);
+                Int32 newLock = (oldLock | ReaderMask);
+
+                if (@lock.CompareExchange(newLock, oldLock) == oldLock)
+                {
+                    // Wait for active readers to release their locks
+                    while ((@lock & WriteMask) != 0)
+                        Thread.Sleep(0);
+
+                    scopeId = Fiber.Id;
+                    return;
+                }
+            }
+        }
+        /// <summary>
+        /// Try to acquire exclusive write access to the critical section
+        /// </summary>
+        public async Task WriteLockAsync()
+        {
+            for (int i = 0; !TryGetWriteLock();)
+            {
+                await Taskʾ.Delay(i);
+                if (i < MaxDelay)
+                    i++;
+            }
+        }
+
+        /// <summary>
+        /// Try to acquire write access to the critical section
+        /// </summary>
+        /// <returns>True if successfully locked, false otherwise</returns>
+        public bool TryGetWriteLock()
+        {
+            if (scopeId == Fiber.Id && (@lock & WriteMask) == 0)
+            {
+                if ((@lock & WriteMask) != 0)
+                {
+                    throw new SynchronizationLockException();
+                }
+                writeReferences.Increment();
+                return true;
+            }
+
+            // Wait until there's no active writer
+            if ((@lock & ReaderMask) != 0)
+                return false;
+
+            Int32 oldLock = (@lock & WriteMask);
+            Int32 newLock = (oldLock | ReaderMask);
+
+            if (@lock.CompareExchange(newLock, oldLock) == oldLock)
+            {
+                // Wait for active readers to release their locks
+                while ((@lock & WriteMask) != 0)
+                {
+                    if (@lock.CompareExchange(oldLock, newLock) == newLock)
+                        return false;
+                }
+
+                scopeId = Fiber.Id;
+                return true;
+            }
+            else return false;
+        }
+
+        /// <summary>
+        /// Passes access for this lock object back
+        /// </summary>
+        public void WriteRelease()
+        {
+            if (scopeId != Fiber.Id)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            if (writeReferences > 0) writeReferences.Decrement();
+            else
+            {
+                scopeId = 0;
+                @lock.Exchange(0);
+            }
+        }
+
+        /// <summary>
+        /// Releases the thread reference that is loked to a write operation
+        /// </summary>
+        public void ReleaseOwningThread()
+        {
+            if (scopeId != Fiber.Id)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            else scopeId = 0;
+        }
+
+        /// <summary>
+        /// Changes the thread reference that is loked to a write operation to the
+        /// calling thread if unbound
+        /// </summary>
+        public void ChangeThread()
+        {
+            if (scopeId != 0)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            else scopeId = Fiber.Id;
+        }
+    }
+}
