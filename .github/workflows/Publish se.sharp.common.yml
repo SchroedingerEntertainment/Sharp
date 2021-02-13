@@ -2,8 +2,10 @@ name: Publish se.sharp.common
 
 on:
   push:
-    branches: [ main ]
-    paths: [ 'Common/package.json' ]
+    branches:
+      - main
+    paths: 
+      - 'Common/package.json'
 
 jobs:
   publish-gpr:
