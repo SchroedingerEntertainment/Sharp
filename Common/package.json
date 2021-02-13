@@ -1,6 +1,6 @@
 {
     "name" : "@schroedingerentertainment/se.sharp.common",
-    "description" : "C# .NET standard library",
+    "description" : "C# .NET standard code library",
     "homepage" : "https://github.com/SchroedingerEntertainment/Sharp",
     "license" : "AGPL-3.0-or-later",
     "version" : "1.0.0",
