@@ -62,9 +62,9 @@ namespace SE.SharpLang
             }
             finally
             {
-                if (overallState == 0 && RawDataBuffer.Length >= BackbufferThreshold)
+                if (overallState == 0 && RawDataBuffer.Position >= BackbufferThreshold)
                 {
-                    int count = ((int)RawDataBuffer.Length - (BackbufferThreshold / 2));
+                    int count = ((int)RawDataBuffer.Position - (BackbufferThreshold / 2));
 
                     RawDataBuffer.Buffer.RemoveRange(0, count);
                     RawDataBuffer.Position -= count;

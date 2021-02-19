@@ -10,7 +10,7 @@ using SE.Parsing;
 namespace SE.SharpLang
 {
     /// <summary>
-    /// 
+    /// A multidimensional regular expression like rule validator 
     /// </summary>
     public partial class Linter : IDisposable
     {
@@ -137,7 +137,7 @@ namespace SE.SharpLang
         }
 
         /// <summary>
-        /// 
+        /// Creates a new instance
         /// </summary>
         public Linter()
         {

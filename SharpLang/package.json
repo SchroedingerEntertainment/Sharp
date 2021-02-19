@@ -3,9 +3,9 @@
     "description" : "A full spec C# preprocessor and minimal parser",
     "homepage" : "https://github.com/SchroedingerEntertainment/Sharp",
     "license" : "AGPL-3.0-or-later",
-    "version" : "1.0.0",
+    "version" : "1.1.0",
     "dependencies" : {
-        "@schroedingerentertainment/se.sharp.common" : "^1.0.0",
+        "@schroedingerentertainment/se.sharp.common" : "^1.1.0",
         "@schroedingerentertainment/se.sharp.parsing" : "^1.0.0",
         "@schroedingerentertainment/se.sharp.reactive" : "^1.0.0"
     },

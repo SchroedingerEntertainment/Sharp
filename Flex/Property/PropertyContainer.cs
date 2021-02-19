@@ -63,13 +63,6 @@ namespace SE.Flex
             itemLock.ReadLock();
         }
         /// <summary>
-        /// Try to acquire inclusive read access to the items
-        /// </summary>
-        public Task ReadLockAsync()
-        {
-            return itemLock.ReadLockAsync();
-        }
-        /// <summary>
         /// Passes access back
         /// </summary>
         public void ReadRelease()
@@ -83,13 +76,6 @@ namespace SE.Flex
         public void WriteLock()
         {
             itemLock.WriteLock();
-        }
-        /// <summary>
-        /// Try to acquire exclusive write access to the items
-        /// </summary>
-        public Task WriteLockAsync()
-        {
-            return itemLock.WriteLockAsync();
         }
         /// <summary>
         /// Passes access back

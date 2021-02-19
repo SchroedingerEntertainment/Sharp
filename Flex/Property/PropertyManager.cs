@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SE.Flex
 {
@@ -19,6 +20,36 @@ namespace SE.Flex
         {
             properties = new Dictionary<UInt32, PropertyContainer>();
             propertyLock = new ReadWriteLock();
+        }
+
+        /// <summary>
+        /// Try to acquire inclusive read access to the items
+        /// </summary>
+        public static void ReadLock()
+        {
+            propertyLock.ReadLock();
+        }
+        /// <summary>
+        /// Passes access back
+        /// </summary>
+        public static void ReadRelease()
+        {
+            propertyLock.ReadRelease();
+        }
+
+        /// <summary>
+        /// Try to acquire exclusive write access to the items
+        /// </summary>
+        public static void WriteLock()
+        {
+            propertyLock.WriteLock();
+        }
+        /// <summary>
+        /// Passes access back
+        /// </summary>
+        public static void WriteRelease()
+        {
+            propertyLock.WriteRelease();
         }
 
         /// <summary>
