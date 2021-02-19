@@ -200,7 +200,7 @@ namespace System.Runtime.Serialization
                             try
                             {
                                 if (!typeCache.TryGetValue(typeId, out formatter))
-                                    throw new SerializationException();
+                                    throw new SerializationException(graph.GetType().FullName);
                             }
                             finally
                             {

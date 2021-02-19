@@ -54,18 +54,6 @@ namespace System.Threading
             references.Increment();
             scopeId = Fiber.Id;
         }
-        /// <summary>
-        /// Try to acquire access to the critical section
-        /// </summary>
-        public async Task LockAsync()
-        {
-            for (int i = 0; !TryGetLock();)
-            {
-                await Taskʾ.Delay(i);
-                if (i < MaxDelay)
-                    i++;
-            }
-        }
 
         /// <summary>
         /// Try to acquire access to the critical section

@@ -57,18 +57,6 @@ namespace System.Threading
                     return;
             }
         }
-        /// <summary>
-        /// Try to acquire inclusive read access to the critical section
-        /// </summary>
-        public async Task ReadLockAsync()
-        {
-            for (int i = 0; !TryGetReadLock();)
-            {
-                await Taskʾ.Delay(i);
-                if (i < MaxDelay)
-                    i++;
-            }
-        }
 
         /// <summary>
         /// Try to acquire inclusive read access to the critical section
@@ -138,18 +126,6 @@ namespace System.Threading
                 }
             }
         }
-        /// <summary>
-        /// Try to acquire exclusive write access to the critical section
-        /// </summary>
-        public async Task WriteLockAsync()
-        {
-            for (int i = 0; !TryGetWriteLock();)
-            {
-                await Taskʾ.Delay(i);
-                if (i < MaxDelay)
-                    i++;
-            }
-        }
 
         /// <summary>
         /// Try to acquire write access to the critical section
@@ -204,31 +180,6 @@ namespace System.Threading
                 scopeId = 0;
                 @lock.Exchange(0);
             }
-        }
-
-        /// <summary>
-        /// Releases the thread reference that is loked to a write operation
-        /// </summary>
-        public void ReleaseOwningThread()
-        {
-            if (scopeId != Fiber.Id)
-            {
-                throw new UnauthorizedAccessException();
-            }
-            else scopeId = 0;
-        }
-
-        /// <summary>
-        /// Changes the thread reference that is loked to a write operation to the
-        /// calling thread if unbound
-        /// </summary>
-        public void ChangeThread()
-        {
-            if (scopeId != 0)
-            {
-                throw new UnauthorizedAccessException();
-            }
-            else scopeId = Fiber.Id;
         }
     }
 }

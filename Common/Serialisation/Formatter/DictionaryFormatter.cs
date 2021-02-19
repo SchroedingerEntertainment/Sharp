@@ -33,7 +33,18 @@ namespace System.Runtime.Serialization
                 serializationStream.Put((byte)TypeCodes.Dictionary);
             }
             serializationStream.EncodeVariableInt((UInt32)value.Count);
-            Type[] generic = value.GetType().GetGenericArguments();
+            Type[] generic = ArrayExtension.Empty<Type>();
+            Type type = value.GetType();
+            do
+            {
+                generic = type.GetGenericArguments();
+                if (type.BaseType != null)
+                {
+                    type = type.BaseType;
+                }
+                else throw new SerializationException(value.GetType().FullName);
+            }
+            while (generic.Length != 2);
             TypeCodes globalKeyCode = TypeFormatter.GetTypeCodes(generic[0]);
             TypeCodes globalValueCode = TypeFormatter.GetTypeCodes(generic[1]);
             bool isExplicitKeyType = (globalKeyCode != TypeCodes.Object);
