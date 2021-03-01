@@ -11,7 +11,7 @@ namespace System.Runtime
     /// </summary>
     public struct Label
     {
-        readonly System.Reflection.Emit.Label label;
+        readonly Any<System.Reflection.Emit.Label> label;
         
         readonly string name;
         /// <summary>
@@ -27,7 +27,7 @@ namespace System.Runtime
         /// </summary>
         public bool IsSet
         {
-            get { return (label != null); }
+            get { return label.HasValue; }
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace System.Runtime
 
         public static implicit operator System.Reflection.Emit.Label(Label label)
         {
-            return label.label;
+            return label.label.Value;
         }
     }
 }

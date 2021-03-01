@@ -44,8 +44,10 @@ namespace System.Runtime.Serialization
         /// <returns>The top object of the deserialized graph</returns>
         public static string Read(Stream serializationStream)
         {
-            StringBuilder buffer = new StringBuilder((int)serializationStream.ToVariableInt());
-            for (int i = 0; i < buffer.Capacity; i++)
+            int length = (int)serializationStream.ToVariableInt();
+
+            StringBuilder buffer = new StringBuilder(length);
+            for (int i = 0; i < length; i++)
             {
                 buffer.Append((char)serializationStream.ToInt16());
             }

@@ -1,25 +1,25 @@
 {
-    "name" : "@schroedingerentertainment/se.sharp.web",
-    "description" : "HttpClient wrapper for the .NET 4.0 platform",
-    "homepage" : "https://github.com/SchroedingerEntertainment/Sharp",
-    "license" : "AGPL-3.0-or-later",
-    "version" : "1.0.0",
-    "dependencies" : {
-        "@schroedingerentertainment/se.sharp.common" : "^1.0.0",
-        "@schroedingerentertainment/se.sharp.json" : "^1.0.0"
+    "name": "@schroedingerentertainment/se.sharp.web",
+    "description": "HttpClient wrapper for the .NET 4.0 platform",
+    "homepage": "https://github.com/SchroedingerEntertainment/Sharp",
+    "license": "AGPL-3.0-or-later",
+    "version": "1.0.0",
+    "dependencies": {
+        "@schroedingerentertainment/se.sharp.common": "^1.0.0",
+        "@schroedingerentertainment/se.sharp.json": "^1.0.0"
     },
-    "keywords" : [
+    "keywords": [
         "C#",
         "sharp",
         "csharp"
     ],
-    "author" : {
-        "name" : "Shaarigan",
-        "url" : "https://github.com/Shaarigan"
+    "author": {
+        "name": "Shaarigan",
+        "url": "https://github.com/Shaarigan"
     },
-    "repository" : {
-        "url" : "https://github.com/SchroedingerEntertainment/Sharp.git",
-        "type" : "git",
-        "directory" : "Web"
+    "repository": {
+        "url": "https://github.com/SchroedingerEntertainment/Sharp.git",
+        "type": "git",
+        "directory": "Web"
     }
 }

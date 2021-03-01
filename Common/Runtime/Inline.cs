@@ -121,77 +121,77 @@ namespace System.Runtime
         /// </summary>
         public TRet InvokeFunc<TRet>()
         {
-            return (TRet)Convert.ChangeType(Invoke(null), typeof(TRet));
+            return (TRet)Invoke(null);
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T, TRet>(T t)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, TRet>(T0 t0, T1 t1)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1 });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, T2, TRet>(T0 t0, T1 t1, T2 t2)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1, t2 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1, t2 });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, T2, T3, TRet>(T0 t0, T1 t1, T2 t2, T3 t3)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1, t2, t3 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1, t2, t3 });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, T2, T3, T4, TRet>(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1, t2, t3, t4 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1, t2, t3, t4 });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, T2, T3, T4, T5, TRet>(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1, t2, t3, t4, t5 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1, t2, t3, t4, t5 });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, T2, T3, T4, T5, T6, TRet>(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1, t2, t3, t4, t5, t6 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1, t2, t3, t4, t5, t6 });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, T2, T3, T4, T5, T6, T7, TRet>(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1, t2, t3, t4, t5, t6, t7 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1, t2, t3, t4, t5, t6, t7 });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, T2, T3, T4, T5, T6, T7, T8, TRet>(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1, t2, t3, t4, t5, t6, t7, t8 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1, t2, t3, t4, t5, t6, t7, t8 });
         }
         /// <summary>
         /// Invokes the encapsulated method
         /// </summary>
         public TRet InvokeFunc<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, TRet>(T0 t0, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9)
         {
-            return (TRet)Convert.ChangeType(Invoke(new object[] { t0, t1, t2, t3, t4, t5, t6, t7, t8, t9 }), typeof(TRet));
+            return (TRet)Invoke(new object[] { t0, t1, t2, t3, t4, t5, t6, t7, t8, t9 });
         }
     }
     /// <summary>
@@ -206,7 +206,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 0)
+            if (args != null && args.Length != 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -248,7 +248,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 1)
+            if (args == null || args.Length != 1)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -294,7 +294,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 2)
+            if (args == null || args.Length != 2)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -341,7 +341,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 3)
+            if (args == null || args.Length != 3)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -389,7 +389,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 4)
+            if (args == null || args.Length != 4)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -438,7 +438,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 5)
+            if (args == null || args.Length != 5)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -488,7 +488,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 6)
+            if (args == null || args.Length != 6)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -539,7 +539,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 7)
+            if (args == null || args.Length != 7)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -591,7 +591,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 8)
+            if (args == null || args.Length != 8)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -644,7 +644,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 9)
+            if (args == null || args.Length != 9)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -698,7 +698,7 @@ namespace System.Runtime
 
         public override object Invoke(params object[] args)
         {
-            if (args.Length != 10)
+            if (args == null || args.Length != 10)
             {
                 throw new ArgumentOutOfRangeException();
             }

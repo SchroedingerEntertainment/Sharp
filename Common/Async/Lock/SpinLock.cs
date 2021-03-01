@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace System.Threading
 {
@@ -39,7 +38,7 @@ namespace System.Threading
         /// </summary>
         public void Lock()
         {
-            if (scopeId == Fiber.Id)
+            if (scopeId == Thread.CurrentThread.ManagedThreadId)
             {
                 references.Increment();
                 return;
@@ -52,7 +51,7 @@ namespace System.Threading
             }
 
             references.Increment();
-            scopeId = Fiber.Id;
+            scopeId = Thread.CurrentThread.ManagedThreadId;
         }
 
         /// <summary>
@@ -69,7 +68,7 @@ namespace System.Threading
         /// </summary>
         public void Release()
         {
-            if (scopeId != Fiber.Id)
+            if (scopeId != Thread.CurrentThread.ManagedThreadId)
             {
                 throw new SynchronizationLockException();
             }

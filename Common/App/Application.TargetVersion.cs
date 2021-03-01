@@ -11,7 +11,7 @@ namespace System.Runtime
 {
     public static partial class Application
     {
-        internal const int VersionShift = 4;
+        internal const int VersionShift = 3;
         private static VersionFlags targetVersion;
 
         /// <summary>
@@ -37,76 +37,89 @@ namespace System.Runtime
                             }
                             if (version != null)
                             {
-                                switch (version.Minor)
+                                switch(version.Major)
                                 {
-                                    case 8:
+                                    case 5: switch (version.Minor)
                                         {
-                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_8 << VersionShift) | VersionFlags.NetFramework;
-                                        }
-                                        break;
-                                    case 7: switch (version.Build)
-                                        {
-                                            case 2:
-                                                {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_7_2 << VersionShift) | VersionFlags.NetFramework;
-                                                }
-                                                break;
-                                            case 1:
-                                                {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_7_1 << VersionShift) | VersionFlags.NetFramework;
-                                                }
-                                                break;
-                                            case -1:
                                             case 0:
                                                 {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_7 << VersionShift) | VersionFlags.NetFramework;
+                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net5_0 << VersionShift) | VersionFlags.NetCore;
                                                 }
                                                 break;
                                         }
                                         break;
-                                    case 6: switch (version.Build)
+                                    case 4: switch (version.Minor)
                                         {
-                                            case 2:
+                                            case 8:
                                                 {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_6_2 << VersionShift) | VersionFlags.NetFramework;
+                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_8 << VersionShift) | VersionFlags.NetFramework;
                                                 }
                                                 break;
-                                            case 1:
+                                            case 7: switch (version.Build)
                                                 {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_6_1 << VersionShift) | VersionFlags.NetFramework;
+                                                    case 2:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_7_2 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
+                                                    case 1:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_7_1 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
+                                                    case -1:
+                                                    case 0:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_7 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
                                                 }
                                                 break;
-                                            case -1:
+                                            case 6: switch (version.Build)
+                                                {
+                                                    case 2:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_6_2 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
+                                                    case 1:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_6_1 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
+                                                    case -1:
+                                                    case 0:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_6 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            case 5: switch (version.Build)
+                                                {
+                                                    case 2:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_5_2 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
+                                                    case 1:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_5_1 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
+                                                    case 0:
+                                                    case -1:
+                                                        {
+                                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_5 << VersionShift) | VersionFlags.NetFramework;
+                                                        }
+                                                        break;
+                                                }
+                                                break;
                                             case 0:
                                                 {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_6 << VersionShift) | VersionFlags.NetFramework;
+                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_0 << VersionShift) | VersionFlags.NetFramework;
                                                 }
                                                 break;
-                                        }
-                                        break;
-                                    case 5: switch (version.Build)
-                                        {
-                                            case 2:
-                                                {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_5_2 << VersionShift) | VersionFlags.NetFramework;
-                                                }
-                                                break;
-                                            case 1:
-                                                {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_5_1 << VersionShift) | VersionFlags.NetFramework;
-                                                }
-                                                break;
-                                            case 0:
-                                            case -1:
-                                                {
-                                                    targetVersion = (VersionFlags)((int)VersionFlags.Net4_5 << VersionShift) | VersionFlags.NetFramework;
-                                                }
-                                                break;
-                                        }
-                                        break;
-                                    case 0:
-                                        {
-                                            targetVersion = (VersionFlags)((int)VersionFlags.Net4_0 << VersionShift) | VersionFlags.NetFramework;
                                         }
                                         break;
                                 }

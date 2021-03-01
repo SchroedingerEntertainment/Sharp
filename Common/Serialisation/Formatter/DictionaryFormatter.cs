@@ -77,7 +77,18 @@ namespace System.Runtime.Serialization
             int count = (int)serializationStream.ToVariableInt();
 
             IDictionary value = fieldType.CreateInstance<IDictionary>();
-            Type[] generic = fieldType.GetGenericArguments();
+            Type[] generic = ArrayExtension.Empty<Type>();
+            Type type = value.GetType();
+            do
+            {
+                generic = type.GetGenericArguments();
+                if (type.BaseType != null)
+                {
+                    type = type.BaseType;
+                }
+                else throw new TypeLoadException(value.GetType().FullName);
+            }
+            while (generic.Length != 2);
             TypeCodes globalKeyCode = (TypeCodes)serializationStream.Get();
             TypeCodes globalValueCode = (TypeCodes)serializationStream.Get();
             bool isExplicitKeyType = (globalKeyCode != TypeCodes.Object);

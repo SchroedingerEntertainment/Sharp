@@ -290,6 +290,15 @@ namespace System.Runtime
             }
 
             self = FileDescriptor.Create(new Uri(Process.GetCurrentProcess().MainModule.FileName).LocalPath);
+            
+            #if !NET_FRAMEWORK
+            string assemblyLocation = Assembly.GetEntryAssembly().Location;
+            if (!Path.GetFileNameWithoutExtension(assemblyLocation).Equals(self.Name, StringComparison.InvariantCultureIgnoreCase))
+            {
+                self = FileDescriptor.Create(assemblyLocation);
+            }
+            #endif
+            
             rootPath = self.Location;
 
             workerPath = new PathDescriptor(Path.GetFullPath(Environment.CurrentDirectory));

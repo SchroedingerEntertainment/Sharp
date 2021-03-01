@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace System.Threading
 {
@@ -43,9 +42,6 @@ namespace System.Threading
         {
             for (;;)
             {
-                if (scopeId == Fiber.Id)
-                    return;
-
                 // Wait until there's no active writer
                 while ((@lock & ReaderMask) != 0)
                     Thread.Sleep(0);
@@ -64,9 +60,6 @@ namespace System.Threading
         /// <returns>True if successfully locked, false otherwise</returns>
         public bool TryGetReadLock()
         {
-            if (scopeId == Fiber.Id)
-                return true;
-
             // Wait until there's no active writer
             if ((@lock & ReaderMask) != 0)
                 return false;
@@ -82,8 +75,7 @@ namespace System.Threading
         /// </summary>
         public void ReadRelease()
         {
-            if (scopeId != Fiber.Id)
-                @lock.Decrement();
+            @lock.Decrement();
         }
 
         /// <summary>
@@ -91,7 +83,7 @@ namespace System.Threading
         /// </summary>
         public void WriteLock()
         {
-            if (scopeId == Fiber.Id)
+            if (scopeId == Thread.CurrentThread.ManagedThreadId)
             {
                 if ((@lock & WriteMask) != 0)
                 {
@@ -102,7 +94,7 @@ namespace System.Threading
             }
             for (;;)
             {
-                if (scopeId == Fiber.Id)
+                if (scopeId == Thread.CurrentThread.ManagedThreadId)
                 {
                     writeReferences.Increment();
                     return;
@@ -121,7 +113,7 @@ namespace System.Threading
                     while ((@lock & WriteMask) != 0)
                         Thread.Sleep(0);
 
-                    scopeId = Fiber.Id;
+                    scopeId = Thread.CurrentThread.ManagedThreadId;
                     return;
                 }
             }
@@ -133,7 +125,7 @@ namespace System.Threading
         /// <returns>True if successfully locked, false otherwise</returns>
         public bool TryGetWriteLock()
         {
-            if (scopeId == Fiber.Id && (@lock & WriteMask) == 0)
+            if (scopeId == Thread.CurrentThread.ManagedThreadId && (@lock & WriteMask) == 0)
             {
                 if ((@lock & WriteMask) != 0)
                 {
@@ -159,7 +151,7 @@ namespace System.Threading
                         return false;
                 }
 
-                scopeId = Fiber.Id;
+                scopeId = Thread.CurrentThread.ManagedThreadId;
                 return true;
             }
             else return false;
@@ -170,7 +162,7 @@ namespace System.Threading
         /// </summary>
         public void WriteRelease()
         {
-            if (scopeId != Fiber.Id)
+            if (scopeId != Thread.CurrentThread.ManagedThreadId)
             {
                 throw new UnauthorizedAccessException();
             }

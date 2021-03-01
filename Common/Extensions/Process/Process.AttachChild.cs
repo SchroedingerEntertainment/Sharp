@@ -3,6 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+#if !NET_FRAMEWORK
+using System.Collections.Specialized;
+#endif
 using System.Runtime;
 
 namespace System.Diagnostics

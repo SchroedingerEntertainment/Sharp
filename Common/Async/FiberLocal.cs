@@ -73,7 +73,7 @@ namespace System.Threading
             {
                 return data.Value;
             }
-            return data;
+            else return null;
             #endif
         }
         /// <summary>

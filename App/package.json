@@ -1,24 +1,24 @@
 {
-    "name" : "@schroedingerentertainment/se.sharp.app",
-    "description" : "A composition package turn every code base into an executable",
-    "homepage" : "https://github.com/SchroedingerEntertainment/Sharp",
-    "license" : "AGPL-3.0-or-later",
-    "version" : "1.0.0",
-    "dependencies" : {
-        "@schroedingerentertainment/se.sharp.common" : "^1.0.0"
+    "name": "@schroedingerentertainment/se.sharp.app",
+    "description": "A composition package turn every code base into an executable",
+    "homepage": "https://github.com/SchroedingerEntertainment/Sharp",
+    "license": "AGPL-3.0-or-later",
+    "version": "1.0.0",
+    "dependencies": {
+        "@schroedingerentertainment/se.sharp.common": "^1.0.0"
     },
-    "keywords" : [
+    "keywords": [
         "C#",
         "sharp",
         "csharp"
     ],
-    "author" : {
-        "name" : "Shaarigan",
-        "url" : "https://github.com/Shaarigan"
+    "author": {
+        "name": "Shaarigan",
+        "url": "https://github.com/Shaarigan"
     },
-    "repository" : {
-        "url" : "https://github.com/SchroedingerEntertainment/Sharp.git",
-        "type" : "git",
-        "directory" : "App"
+    "repository": {
+        "url": "https://github.com/SchroedingerEntertainment/Sharp.git",
+        "type": "git",
+        "directory": "App"
     }
 }
