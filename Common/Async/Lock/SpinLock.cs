@@ -11,8 +11,6 @@ namespace System.Threading
     /// </summary>
     public struct Spinlockʾ
     {
-        const int MaxDelay = 100;
-
         atomic_int @lock;
         /// <summary>
         /// Gets current lock state

@@ -13,7 +13,6 @@ namespace System.Threading
     {
         public const Int32 WriteMask = 0x7ffffff;
         public const Int32 ReaderMask = 0x8000000;
-        const int MaxDelay = 1000;
 
         atomic_int @lock;
         /// <summary>

@@ -12,7 +12,7 @@ namespace System
     /// </summary>
     public struct HashCombiner
     {
-        const Int64 HashCombinerBias = 0x1505L;
+        public const Int64 HashCombinerBias = 0x1505L;
         Int64 combinedHash64;
 
         /// <summary>
