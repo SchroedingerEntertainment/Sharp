@@ -14,24 +14,6 @@ namespace SE.Flex
     public struct TemplateId
     {
         public readonly static TemplateId Invalid = new TemplateId();
-        
-        #if net40 || net403 || net45 || net451 || net452 || net46 || net461 || net462 || net47 || net471 || net472
-        class IdContainer : AppDomainʾ.ReferenceObject
-        {
-            atomic_int value;
-
-            public IdContainer()
-            { }
-
-            public Int32 Increment()
-            {
-                return value.Increment();
-            }
-        }
-        private static AppStatic<IdContainer> nextId;
-        #else
-        private static atomic_int nextId;
-        #endif
 
         private readonly UInt64 value;
 
@@ -50,13 +32,6 @@ namespace SE.Flex
             get { return (UInt32)(value & UInt32.MaxValue); }
         }
 
-        #if net40 || net403 || net45 || net451 || net452 || net46 || net461 || net462 || net47 || net471 || net472
-        static TemplateId()
-        {
-            nextId = new AppStatic<IdContainer>();
-            nextId.CreateValue();
-        }
-        #endif
         /// <summary>
         /// Creates a new instance ID from the given integer
         /// </summary>
@@ -106,25 +81,11 @@ namespace SE.Flex
         }
 
         /// <summary>
-        /// Creates a new semi unique ID
+        /// Creates an object specific psuedo unique ID
         /// </summary>
-        /// <remarks>
-        /// A 32 bit ID is unique up to the point when 2^32-1 IDs have been created.
-        /// The ID will then swap over to start again from 1 (0 is invalid)
-        /// </remarks>
         public static TemplateId Create()
         {
-            int id;
-            do
-            {
-                #if net40 || net403 || net45 || net451 || net452 || net46 || net461 || net462 || net47 || net471 || net472
-                id = nextId.Value.Increment();
-                #else
-                id = nextId.Increment();
-                #endif
-            }
-            while (id == 0);
-            return new TemplateId((UInt32)id);
+            return new TemplateId((UInt32)UniqueId.Next32());
         }
     }
 }
